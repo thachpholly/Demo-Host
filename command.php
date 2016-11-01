@@ -1,7 +1,7 @@
 
     <?php
-	$connect = mysql_connect("mysql.hostinger.vn", "u686021949_admin", "123456") or die ("Server not found!");
-		mysql_select_db("u686021949_data", $connect) or die("Database not found!");
+	$connect = mysql_connect("localhost", "root", "") or die ("Server not found!");
+		mysql_select_db("Sensor", $connect) or die("Database not found!");
 	   // Hiển thị các dữ liệu đã được nhận được từ raspberry
 
 		function valid_Rasp($rasp_id, $pass)
@@ -18,22 +18,21 @@
 				}
 			}
 		function get_command()
-			{
-				$valid_Rasp = "select command from cmd where excuted = \"0\""; 			
-				$result = mysql_query($valid_Rasp);
-				while($row = mysql_fetch_assoc($result))
-					echo $row["command"];
-				$valid_Rasp = "update cmd set excuted = \"1\""; 
-				//echo $valid_Rasp;
-				$result = mysql_query($valid_Rasp);
-			}
+		{
+			$valid_Rasp = "select command from cmd where excuted = \"0\""; 			
+			$result = mysql_query($valid_Rasp);
+			while($row = mysql_fetch_assoc($result))
+				echo $row["command"]." ";
+			$valid_Rasp = "update cmd set excuted = \"1\""; 
+			//echo $valid_Rasp;
+			$result = mysql_query($valid_Rasp);
+		}
 
 	//header('Content-Type: application/json');
-	$rasp_id = $_POST['rasp_id'];
-	$pass = $_POST['pass'];
-	if(valid_Rasp($rasp_id, $pass))
+	//$rasp_id = $_POST['rasp_id'];
+	//$pass = $_POST['pass'];
+	//if(valid_Rasp($rasp_id, $pass))
 		get_command();
 	//echo json_encode($data);
 	?>
-
 

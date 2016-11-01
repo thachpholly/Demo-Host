@@ -1,36 +1,28 @@
 <?php
-	$connect = mysql_connect("mysql.hostinger.vn", "u686021949_admin", "123456") or die ("Server not found!");
-	mysql_select_db("u686021949_data", $connect) or die("Database not found!");
+	$connect = mysql_connect("localhost", "root", "") or die ("Server not found!");
+	mysql_select_db("Sensor", $connect) or die("Database not found!");
    // Hiển thị các dữ liệu đã được nhận được từ raspberry
 
-	function get_insert_str($data)
-	{
-		list($Time, $NodeID, $AirTemperature, $AirHumidity, $SoilTemperature, $SoilMoisture, $LightIntensity) = explode(",", $data);
-		$Time = substr($Time,1,strlen($Time));
-		$NodeID = substr($NodeID,1,strlen($NodeID));
-		$AirTemperature = substr($AirTemperature,1,strlen($AirTemperature));
-		$AirHumidity = substr($AirHumidity,1,strlen($AirHumidity));
-		$SoilTemperature = substr($SoilTemperature,1,strlen($SoilTemperature));
-		$SoilMoisture = substr($SoilMoisture,1,strlen($SoilMoisture));
-		$LightIntensity = substr($LightIntensity,1,strlen($LightIntensity)-2);
+	
 
-		$str_insert = "insert into sensor VALUES ('".trim($Time)."', '".trim($NodeID)."', '".trim($AirTemperature)."', '".trim($AirHumidity)."', '".trim($SoilTemperature)."', '".trim($SoilMoisture)."', '".trim($LightIntensity)."')";
-		//echo "\n".$str_insert;
-		mysql_query($str_insert);
-	}
-
-	function INSERT_RECORD($data, $rasp_id, $pass)
+	function INSERT_RECORD($Time, $NodeID, $AirTemperature, $AirHumidity, $SoilTemperature, $SoilMoisture, $LightIntensity)
 		{
-			get_insert_str($data);
+			$str_insert = "INSERT INTO `sensor`(`Time`, `NodeID`, `AirTemperature`, `AirHumidity`, `SoilTemperature`, `SoilMoisture`, `LightIntensity`) VALUES ('".trim($Time)."', '".trim($NodeID)."', '".trim($AirTemperature)."', '".trim($AirHumidity)."', '".trim($SoilTemperature)."', '".trim($SoilMoisture)."', '".trim($LightIntensity)."')";
+		#echo "\n".$str_insert;
+		mysql_query($str_insert);
 			return true;
 		}
 
-		$data = $_POST['data'];
-	   $rasp_id = $_POST['rasp_id'];
-	   $pass = $_POST['pass'];
-		if(INSERT_RECORD($data, $rasp_id, $pass))
+		$time = $_POST['time'];
+	   	$nodeID = $_POST['nodeID'];
+         $airTemperature = $_POST['airTemperature'];
+          $airHumidity = $_POST['airHumidity'];
+           $soilTemperature = $_POST['soilTemperature'];
+           $soilMoisture = $_POST['soilMoisture'];
+           $lightIntensity = $_POST['lightIntensity'];
+		if(INSERT_RECORD($time, $nodeID, $airTemperature, $airHumidity, $soilTemperature, $soilMoisture, $lightIntensity))
 		{
-			echo "<script>window.location.href='form.html'</script>";
+			echo "haha";
 		}
 
 	
